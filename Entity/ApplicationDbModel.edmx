@@ -1,0 +1,403 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="stratex_scheduleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Activities">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="numeric" Precision="10" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="numeric" Precision="10" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Breaks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="numeric" Precision="10" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StartDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="EndDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ActivityID" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="EmployeeID" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Leaves">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="numeric" Precision="10" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StartDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="EndDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ActivityID" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="EmployeeID" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shifts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="numeric" Precision="10" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StartDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="EndDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ActivityID" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="EmployeeID" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Breaks_Activities">
+          <End Role="Activities" Type="Self.Activities" Multiplicity="1" />
+          <End Role="Breaks" Type="Self.Breaks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Breaks">
+              <PropertyRef Name="ActivityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Breaks_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Breaks" Type="Self.Breaks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Breaks">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Leaves_Activities">
+          <End Role="Activities" Type="Self.Activities" Multiplicity="1" />
+          <End Role="Leaves" Type="Self.Leaves" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Leaves">
+              <PropertyRef Name="ActivityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Leaves_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Leaves" Type="Self.Leaves" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Leaves">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shifts_Activities">
+          <End Role="Activities" Type="Self.Activities" Multiplicity="1" />
+          <End Role="Shifts" Type="Self.Shifts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Shifts">
+              <PropertyRef Name="ActivityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shifts_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Shifts" Type="Self.Shifts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Shifts">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetActivities" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Date" Type="date" Mode="In" />
+        </Function>
+        <EntityContainer Name="stratex_scheduleModelStoreContainer">
+          <EntitySet Name="Activities" EntityType="Self.Activities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Breaks" EntityType="Self.Breaks" Schema="schedule" store:Type="Tables" />
+          <EntitySet Name="Leaves" EntityType="Self.Leaves" Schema="schedule" store:Type="Tables" />
+          <EntitySet Name="Shifts" EntityType="Self.Shifts" Schema="schedule" store:Type="Tables" />
+          <AssociationSet Name="FK_Breaks_Activities" Association="Self.FK_Breaks_Activities">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="Breaks" EntitySet="Breaks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Breaks_Employees" Association="Self.FK_Breaks_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Breaks" EntitySet="Breaks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Leaves_Activities" Association="Self.FK_Leaves_Activities">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="Leaves" EntitySet="Leaves" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Leaves_Employees" Association="Self.FK_Leaves_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Leaves" EntitySet="Leaves" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shifts_Activities" Association="Self.FK_Shifts_Activities">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="Shifts" EntitySet="Shifts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shifts_Employees" Association="Self.FK_Shifts_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Shifts" EntitySet="Shifts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="stratex_scheduleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Decimal" Precision="10" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Breaks" Relationship="Self.FK_Breaks_Activities" FromRole="Activities" ToRole="Breaks" />
+          <NavigationProperty Name="Leaves" Relationship="Self.FK_Leaves_Activities" FromRole="Activities" ToRole="Leaves" />
+          <NavigationProperty Name="Shifts" Relationship="Self.FK_Shifts_Activities" FromRole="Activities" ToRole="Shifts" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Decimal" Precision="10" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Breaks" Relationship="Self.FK_Breaks_Employees" FromRole="Employees" ToRole="Breaks" />
+          <NavigationProperty Name="Leaves" Relationship="Self.FK_Leaves_Employees" FromRole="Employees" ToRole="Leaves" />
+          <NavigationProperty Name="Shifts" Relationship="Self.FK_Shifts_Employees" FromRole="Employees" ToRole="Shifts" />
+        </EntityType>
+        <EntityType Name="Break">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Decimal" Precision="10" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StartDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="EndDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ActivityID" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="EmployeeID" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Activity" Relationship="Self.FK_Breaks_Activities" FromRole="Breaks" ToRole="Activities" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Breaks_Employees" FromRole="Breaks" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="Leaf">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Decimal" Precision="10" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StartDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="EndDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ActivityID" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="EmployeeID" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Activity" Relationship="Self.FK_Leaves_Activities" FromRole="Leaves" ToRole="Activities" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Leaves_Employees" FromRole="Leaves" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="Shift">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Decimal" Precision="10" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StartDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="EndDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ActivityID" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="EmployeeID" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Activity" Relationship="Self.FK_Shifts_Activities" FromRole="Shifts" ToRole="Activities" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Shifts_Employees" FromRole="Shifts" ToRole="Employees" />
+        </EntityType>
+        <Association Name="FK_Breaks_Activities">
+          <End Role="Activities" Type="Self.Activity" Multiplicity="1" />
+          <End Role="Breaks" Type="Self.Break" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Breaks">
+              <PropertyRef Name="ActivityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Leaves_Activities">
+          <End Role="Activities" Type="Self.Activity" Multiplicity="1" />
+          <End Role="Leaves" Type="Self.Leaf" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Leaves">
+              <PropertyRef Name="ActivityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shifts_Activities">
+          <End Role="Activities" Type="Self.Activity" Multiplicity="1" />
+          <End Role="Shifts" Type="Self.Shift" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Shifts">
+              <PropertyRef Name="ActivityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Breaks_Employees">
+          <End Role="Employees" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Breaks" Type="Self.Break" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Breaks">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Leaves_Employees">
+          <End Role="Employees" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Leaves" Type="Self.Leaf" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Leaves">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shifts_Employees">
+          <End Role="Employees" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Shifts" Type="Self.Shift" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Shifts">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="stratex_scheduleEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Activities" EntityType="Self.Activity" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Breaks" EntityType="Self.Break" />
+          <EntitySet Name="Leaves" EntityType="Self.Leaf" />
+          <EntitySet Name="Shifts" EntityType="Self.Shift" />
+          <AssociationSet Name="FK_Breaks_Activities" Association="Self.FK_Breaks_Activities">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="Breaks" EntitySet="Breaks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Leaves_Activities" Association="Self.FK_Leaves_Activities">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="Leaves" EntitySet="Leaves" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shifts_Activities" Association="Self.FK_Shifts_Activities">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="Shifts" EntitySet="Shifts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Breaks_Employees" Association="Self.FK_Breaks_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Breaks" EntitySet="Breaks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Leaves_Employees" Association="Self.FK_Leaves_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Leaves" EntitySet="Leaves" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shifts_Employees" Association="Self.FK_Shifts_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Shifts" EntitySet="Shifts" />
+          </AssociationSet>
+          <FunctionImport Name="GetActivities">
+          <Parameter Name="Date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="stratex_scheduleModelStoreContainer" CdmEntityContainer="stratex_scheduleEntities">
+          <EntitySetMapping Name="Activities">
+            <EntityTypeMapping TypeName="stratex_scheduleModel.Activity">
+              <MappingFragment StoreEntitySet="Activities">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="stratex_scheduleModel.Employee">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Breaks">
+            <EntityTypeMapping TypeName="stratex_scheduleModel.Break">
+              <MappingFragment StoreEntitySet="Breaks">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="StartDateTime" ColumnName="StartDateTime" />
+                <ScalarProperty Name="EndDateTime" ColumnName="EndDateTime" />
+                <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Leaves">
+            <EntityTypeMapping TypeName="stratex_scheduleModel.Leaf">
+              <MappingFragment StoreEntitySet="Leaves">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="StartDateTime" ColumnName="StartDateTime" />
+                <ScalarProperty Name="EndDateTime" ColumnName="EndDateTime" />
+                <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shifts">
+            <EntityTypeMapping TypeName="stratex_scheduleModel.Shift">
+              <MappingFragment StoreEntitySet="Shifts">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="StartDateTime" ColumnName="StartDateTime" />
+                <ScalarProperty Name="EndDateTime" ColumnName="EndDateTime" />
+                <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetActivities" FunctionName="stratex_scheduleModel.Store.GetActivities" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

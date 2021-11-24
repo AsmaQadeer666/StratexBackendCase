@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="733d05636d1a423db516094901954013" Name="Diagram1">
+        <EntityTypeShape EntityType="stratex_scheduleModel.Activity" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="stratex_scheduleModel.Employee" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="stratex_scheduleModel.Break" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="stratex_scheduleModel.Leaf" Width="1.5" PointX="6" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="stratex_scheduleModel.Shift" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="stratex_scheduleModel.FK_Breaks_Activities" ManuallyRouted="false" />
+        <AssociationConnector Association="stratex_scheduleModel.FK_Leaves_Activities" ManuallyRouted="false" />
+        <AssociationConnector Association="stratex_scheduleModel.FK_Shifts_Activities" ManuallyRouted="false" />
+        <AssociationConnector Association="stratex_scheduleModel.FK_Breaks_Employees" ManuallyRouted="false" />
+        <AssociationConnector Association="stratex_scheduleModel.FK_Leaves_Employees" ManuallyRouted="false" />
+        <AssociationConnector Association="stratex_scheduleModel.FK_Shifts_Employees" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
